@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Projeto Quizz</title>
+</head>
+
+<body>
+    <header class="header" id="header">
+
+    </header>
+    <!-- Pagina 1 -->
+
+    <div id="main" class="main">
+        <div class="container" id="um">
+            <img src="logo_purple-removebg-preview.png" alt="" class="logo">
+            <div class="caixa-botao">
+                <input placeholder="Digite 3" type="number" id="vidas">
+                <br> <br>
+                <div class="caixaum">
+                    <button class="button" id="iniciar">Iniciar</button>
+                </div>
+            </div>
+            <p id="aviso"> Arraste para baixo para responder as perguntas</p>
+        </div>
+
+    </div>
+
+    <!-- Perguntas -->
+
+    <div class="questoes hide" id="questoes">
+        <h3 id="atualQuestao">0</h3>
+        <div id="imgHelp"><img src="" alt="Imagem para te ajudar" class="img" id="img">
+        </div>
+
+        <h2 id="tituloDaQuestao"></h2>
+        <div id="Opns">
+            <button id="btn-0" class="option"></button>
+            <button id="btn-1" class="option"></button>
+            <button id="btn-2" class="option"></button>
+            <button id="btn-3" class="option"></button>
+        </div>
+    </div>
+
+    <!-- Final -->
+
+    <div class="fim hide" id="fim">
+        <h2 id="terminoTitulo">Parabens por completar o Quizz</h2>
+        <p id="score">Você marcou um total de 0 pontos</p>
+        <p id="feedback">Você fez o seu melhor</p>
+        <button id="voltar">reiniciar</button>
+    </div>
+
+
+
+   <footer id="footer" class="footer">Leticia Souza "©"</footer>
+    <script src="main.js"></script>
+</body>
+
+</html>
