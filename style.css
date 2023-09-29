@@ -1,13 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(90deg, rgba(61,0,0,1) 0%, rgba(143,0,0,1) 50%, rgba(61,0,0,1) 100%);
+}
+
+/* html pag inicio */
+
+#inicio {
+    background-color: #890000;
+    display: flex;
+    justify-content: center;
+   
+    
+}
+
+.logo {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 /* começo botao uiverse */
 
-button {
+#botao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     /* padding: 10px 25px; */
-    background: #fad78c;
+    background: #ffffff;
     font-size: 17px;
     font-weight: 500;
     color: #181818;
-    border: 3px solid rgb(221, 133, 54);
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 8px;
     box-shadow: 0 0 0 #af925cbd;
     transition: all .3s ease-in-out;
@@ -81,13 +118,13 @@ button {
     transition: all .8s ease;
 }
 
-button:hover {
+#botao:hover {
     background: transparent;
-    color: #dd8536;
-    box-shadow: 0 0 25px #fec1958c;
+    color: #ffffff;
+    box-shadow: 1px 1px 41px 15px #fec1958c;
 }
 
-button:hover .star-1 {
+#botao:hover .star-1 {
     position: absolute;
     top: -80%;
     left: -30%;
@@ -97,9 +134,9 @@ button:hover .star-1 {
     z-index: 2;
 }
 
-button:hover .star-2 {
+#botao:hover .star-2 {
     position: absolute;
-    top: -30%;
+    top: -50%;
     left: 10%;
     width: 15px;
     height: auto;
@@ -107,9 +144,9 @@ button:hover .star-2 {
     z-index: 2;
 }
 
-button:hover .star-3 {
+#botao:hover .star-3 {
     position: absolute;
-    top: 55%;
+    top: 52%;
     left: 25%;
     width: 5px;
     height: auto;
@@ -117,9 +154,9 @@ button:hover .star-3 {
     z-index: 2;
 }
 
-button:hover .star-4 {
+#botao:hover .star-4 {
     position: absolute;
-    top: 70%;
+    top: 60%;
     left: 80%;
     width: 8px;
     height: auto;
@@ -127,7 +164,7 @@ button:hover .star-4 {
     z-index: 2;
 }
 
-button:hover .star-5 {
+#botao:hover .star-5 {
     position: absolute;
     top: 25%;
     left: 115%;
@@ -137,9 +174,9 @@ button:hover .star-5 {
     z-index: 2;
 }
 
-button:hover .star-6 {
+#botao:hover .star-6 {
     position: absolute;
-    top: 5%;
+    top: -10%;
     left: 60%;
     width: 5px;
     height: auto;
@@ -148,7 +185,7 @@ button:hover .star-6 {
 }
 
 .fil0 {
-    fill: rgb(221, 133, 54);
+    fill: rgb(235, 235, 235);
 }
 
 a {
@@ -157,3 +194,9 @@ a {
 }
 
 /* fim botao uiverse */
+
+/* fim html pag inicio */
+
+
+
+

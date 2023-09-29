@@ -1,63 +1,162 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Projeto Quizz</title>
+    <title>Kaquizz</title>
+    <link rel="stylesheet" href="quizz.css">
+    <link rel="icon" href="icon (1).png">
 </head>
 
 <body>
-    <header class="header" id="header">
-
-    </header>
-    <!-- Pagina 1 -->
-
-    <div id="main" class="main">
-        <div class="container" id="um">
-            <img src="logo_purple-removebg-preview.png" alt="" class="logo">
-            <div class="caixa-botao">
-                <input placeholder="Digite 3" type="number" id="vidas">
-                <br> <br>
-                <div class="caixaum">
-                    <button class="button" id="iniciar">Iniciar</button>
-                </div>
-            </div>
-            <p id="aviso"> Arraste para baixo para responder as perguntas</p>
-        </div>
-
+    <img class="h1" src="logowhite.png" alt="">
+    <div id="question-container">
+        <img id="question-image" src="" alt="Imagem da pergunta">
+        <h2 id="question">Pergunta</h2>
+        <div id="options"></div>
     </div>
+    <p id="score">PONTUAÇÃO: 0</p>
+    <button id="reset-button" onclick="resetQuiz()" style="display: none;">Reiniciar</button>
+    <button id="voltar-button">Voltar</button>
+    <img id="success-image" src="uau.png" alt="Imagem de sucesso" style="display: none;" width="150px">
+    <!-- Nova imagem de sucesso -->
 
-    <!-- Perguntas -->
+    <script>
+        // Definição das perguntas e respostas
+        const questions = [
+            {
+                question: "Quais são as fases da lua?",
+                image: "lua.png",
+                options: ["Nova, crescente e superlua", "Nova, crescente, cheia e minguante", "Nova, cheia e superlua", "Nova, cheia, minguante e lua de sangue"],
+                answer: 1
+            },
+            {
+                question: "Quem escreveu 'Dom Casmurro'?",
+                image: "machado.png",
+                options: ["Graciliano Ramos", "José de Alencar", "Eça de Queirós", "Machado de Assis"],
+                answer: 3
+            },
+            {
+                question: "Que país tem o formato de uma bota?",
+                image: "italia.png",
+                options: ["Portugal", "Itália", "Brasil", "México"],
+                answer: 1
+            },
+            {
+                question: "Qual é o símbolo químico do oxigênio?",
+                image: "o.png",
+                options: ["O", "O2", "O3", "H2O"],
+                answer: 0
+            },
+            {
+                question: "Qual a altura da rede de vôlei nos jogos masculino e feminino?",
+                image: "rede.png",
+                options: [" 2,4 m para ambos", "1,8 m e 1,5 m", "2,43 m e 2,24 m", "2,45 m e 2,15 m"],
+                answer: 2
+            }
+        ];
 
-    <div class="questoes hide" id="questoes">
-        <h3 id="atualQuestao">0</h3>
-        <div id="imgHelp"><img src="" alt="Imagem para te ajudar" class="img" id="img">
-        </div>
+        // Variáveis para acompanhar o estado do jogo
+        let currentQuestion = 0;
+        let score = 0;
+        let attemptsLeft = 2;
 
-        <h2 id="tituloDaQuestao"></h2>
-        <div id="Opns">
-            <button id="btn-0" class="option"></button>
-            <button id="btn-1" class="option"></button>
-            <button id="btn-2" class="option"></button>
-            <button id="btn-3" class="option"></button>
-        </div>
-    </div>
+        // Elementos HTML
+        const questionElement = document.getElementById("question");
+        const questionImageElement = document.getElementById("question-image");
+        const optionsElement = document.getElementById("options");
+        const scoreElement = document.getElementById("score");
+        const resetButton = document.getElementById("reset-button");
+        const successImage = document.getElementById("success-image"); // Nova imagem de sucesso
 
-    <!-- Final -->
+        // Função para exibir a pergunta atual
+        function displayQuestion() {
+            if (currentQuestion < questions.length) {
+                const current = questions[currentQuestion];
+                questionElement.textContent = current.question;
+                questionImageElement.src = current.image;
 
-    <div class="fim hide" id="fim">
-        <h2 id="terminoTitulo">Parabens por completar o Quizz</h2>
-        <p id="score">Você marcou um total de 0 pontos</p>
-        <p id="feedback">Você fez o seu melhor</p>
-        <button id="voltar">reiniciar</button>
-    </div>
+                optionsElement.innerHTML = "";
+                current.options.forEach((option, index) => {
+                    const button = document.createElement("button");
+                    button.textContent = option;
+                    button.onclick = () => checkAnswer(index);
+                    optionsElement.appendChild(button);
+                });
+            } else {
+                endGame();
+            }
+        }
 
+        // Função para verificar a resposta selecionada
+        function checkAnswer(selectedOption) {
+            const current = questions[currentQuestion];
+            if (selectedOption === current.answer) {
+                score += 10; // Adiciona 10 pontos à pontuação por resposta correta
+                scoreElement.textContent = `PONTUAÇÃO: ${score}`;
+                document.body.style.backgroundColor = "#002924"; // Altera a cor de fundo do body para verde quando a resposta estiver correta
+                currentQuestion++; // Avança para a próxima pergunta
+                attemptsLeft = 2; // Reinicie o número de tentativas permitidas
+                if (currentQuestion === questions.length) {
+                    // Verifica se todas as perguntas foram respondidas
+                    if (score === questions.length * 10) {
+                        bodyBlink(); // Chama a função para fazer o body piscar
+                        endGameWithMessage("Parabéns! Você acertou todas as perguntas!");
+                    } else {
+                        endGameWithMessage("Que pena, tente novamente em reiniciar!");
+                    }
+                } else {
+                    displayQuestion();
+                }
+            } else {
+                attemptsLeft--; // Reduz o número de tentativas restantes
+                document.body.style.backgroundColor = "#3B0000"; // Altera a cor de fundo do body para vermelho quando a resposta estiver incorreta
+                if (attemptsLeft === 0) { // Verifica se esgotou as tentativas
+                    resetQuiz(); // Reinicia o quiz após duas respostas erradas consecutivas
+                }
+            }
+        }
 
+        // Função para encerrar o jogo com mensagem e mostrar o botão de reiniciar
+        function endGameWithMessage(message) {
+            questionElement.textContent = message;
+            questionImageElement.style.display = "none"; // Esconde a imagem
+            optionsElement.innerHTML = "";
+            resetButton.style.display = "block"; // Mostra o botão de reiniciar
+            successImage.style.display = "block"; // Mostra a imagem de sucesso
+        }
 
-   <footer id="footer" class="footer">Leticia Souza "©"</footer>
-    <script src="main.js"></script>
+        // Função para reiniciar o quiz
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            attemptsLeft = 2;
+            scoreElement.textContent = "PONTUAÇÃO: 0";
+            resetButton.style.display = "none"; // Esconde o botão de reiniciar
+            document.body.style.backgroundColor = ""; // Remove a cor de fundo definida
+            questionImageElement.style.display = "block"; // Mostra a imagem novamente
+            successImage.style.display = "none"; // Esconde a imagem de sucesso
+            displayQuestion();
+        }
+
+        // Função para fazer o body piscar
+        function bodyBlink() {
+            let blinkCount = 0;
+            const colors = ["#01002E", "#002E1D", "#2E0000"]; // Cores a serem alternadas
+            const blinkInterval = setInterval(function () {
+                document.body.style.backgroundColor = colors[blinkCount % colors.length];
+                blinkCount++;
+                if (blinkCount >= colors.length * 2) { // Piscar 6 vezes (3 piscadas)
+                    clearInterval(blinkInterval); // Interrompe o intervalo de piscar
+                    document.body.style.backgroundColor = ""; // Remove a cor de fundo definida
+                }
+            }, 300); // Alterna a cada 300 milissegundos (0,3 segundos)
+        }
+
+        // Exibe a primeira pergunta ao carregar a página
+        displayQuestion();
+    </script>
 </body>
 
 </html>
