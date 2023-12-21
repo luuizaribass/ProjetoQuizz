@@ -60,7 +60,9 @@
         // Variáveis para acompanhar o estado do jogo
         let currentQuestion = 0;
         let score = 0;
-        let attemptsLeft = 2;
+        let attemptsLeft = 1;
+        let attemptsForCurrentQuestion = 1;
+
 
         // Elementos HTML
         const questionElement = document.getElementById("question");
@@ -84,6 +86,9 @@
                     button.onclick = () => checkAnswer(index);
                     optionsElement.appendChild(button);
                 });
+
+                // Exibir o número de tentativas restantes
+                questionElement.innerHTML += `<br>Tentativas restantes: ${attemptsForCurrentQuestion}`;
             } else {
                 endGame();
             }
@@ -97,7 +102,7 @@
                 scoreElement.textContent = `PONTUAÇÃO: ${score}`;
                 document.body.style.backgroundColor = "#002924"; // Altera a cor de fundo do body para verde quando a resposta estiver correta
                 currentQuestion++; // Avança para a próxima pergunta
-                attemptsLeft = 2; // Reinicie o número de tentativas permitidas
+                attemptsForCurrentQuestion = 1; // Reinicie o número de tentativas para a próxima pergunta
                 if (currentQuestion === questions.length) {
                     // Verifica se todas as perguntas foram respondidas
                     if (score === questions.length * 10) {
@@ -110,13 +115,16 @@
                     displayQuestion();
                 }
             } else {
-                attemptsLeft--; // Reduz o número de tentativas restantes
-                document.body.style.backgroundColor = "#3B0000"; // Altera a cor de fundo do body para vermelho quando a resposta estiver incorreta
-                if (attemptsLeft === 0) { // Verifica se esgotou as tentativas
-                    resetQuiz(); // Reinicia o quiz após duas respostas erradas consecutivas
+                if (attemptsForCurrentQuestion > 0) { // Verifica se ainda há tentativas restantes
+                    attemptsForCurrentQuestion--; // Reduz o número de tentativas restantes
+                    document.body.style.backgroundColor = "#3B0000"; // Altera a cor de fundo do body para vermelho quando a resposta estiver incorreta
+                    displayQuestion(); // Exibe novamente a mesma pergunta com as tentativas restantes
+                } else {
+                    resetQuiz(); // Reinicia o quiz após esgotar as tentativas
                 }
             }
         }
+
 
         // Função para encerrar o jogo com mensagem e mostrar o botão de reiniciar
         function endGameWithMessage(message) {
